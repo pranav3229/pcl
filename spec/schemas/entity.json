@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcl.dev/schemas/v0/entity.json",
+  "title": "PCL Entity",
+  "type": "object",
+  "required": ["pcl_version", "id"],
+  "properties": {
+    "pcl_version": { "$ref": "common.json#/$defs/pcl_version" },
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string" },
+    "entity_type": { "$ref": "common.json#/$defs/SemanticRef" },
+    "controller": { "type": "string" },
+    "contains": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "location": { "$ref": "common.json#/$defs/Location" },
+    "extensions": { "type": "object" }
+  },
+  "additionalProperties": false
+}

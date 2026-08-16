@@ -1,0 +1,7 @@
+{
+  "id": "offer-cnc-manufacture",
+  "declaration_id": "cap-manufacture-cnc",
+  "entity_id": "cnc-mill-3",
+  "state": { "status": "idle" },
+  "availability": { "accepts_work": true }
+}

@@ -1,0 +1,25 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-manufacture-cnc",
+  "entity_id": "cnc-mill-3",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/manufacturing/v0",
+    "term": "manufacture"
+  },
+  "inputs": [
+    { "name": "cad_model", "role": "artifact", "value_kind": "file_ref", "required": true },
+    { "name": "material", "role": "object", "value_kind": "entity_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "manufactured_part", "role": "artifact", "value_kind": "entity_ref" }
+  ],
+  "constraints": [
+    { "name": "tolerance", "quantity": { "value": 0.05, "unit": "mm", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "opcua",
+    "target": "ns=2;s=CNC.Mill3",
+    "operation": "StartJob",
+    "parameters_map": { "cad": "inputs.cad_model", "material": "inputs.material" }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "ev-station-42",
+  "name": "EV Station 42",
+  "entity_type": { "vocabulary": "https://pcl.dev/vocab/core/v0", "term": "charging_station" },
+  "controller": "org:chargegrid"
+}

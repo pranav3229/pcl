@@ -1,0 +1,48 @@
+{
+  "title": "PCL Conformance Test Vectors: Spatial & Haversine Geodesic",
+  "version": "0.1.0",
+  "earth_radius_km": 6371.0088,
+  "vectors": [
+    {
+      "id": "spatial-01-exact-coincident",
+      "description": "Coincident coordinates produce exactly 0.0 km distance",
+      "point_a": { "lat": 12.9716, "lon": 77.5946 },
+      "point_b": { "lat": 12.9716, "lon": 77.5946 },
+      "expected_distance_km": 0.0,
+      "tolerance_km": 0.0,
+      "expected_match": true
+    },
+    {
+      "id": "spatial-02-within-tolerance",
+      "description": "Points ~0.22 km apart match within 0.5 km tolerance",
+      "point_a": { "lat": 12.9716, "lon": 77.5946 },
+      "point_b": { "lat": 12.9730, "lon": 77.5960 },
+      "expected_distance_km": 0.2185,
+      "tolerance_km": 0.5,
+      "expected_match": true
+    },
+    {
+      "id": "spatial-03-outside-tolerance",
+      "description": "Points ~14.79 km apart reject when tolerance is 5.0 km",
+      "point_a": { "lat": 12.9716, "lon": 77.5946 },
+      "point_b": { "lat": 12.8500, "lon": 77.6500 },
+      "expected_distance_km": 14.79,
+      "tolerance_km": 5.0,
+      "expected_match": false
+    },
+    {
+      "id": "spatial-04-semantic-anchor-match",
+      "description": "Identical semantic ref anchors match",
+      "location_a": { "kind": "semantic", "ref": "warehouse-floor-2" },
+      "location_b": { "kind": "semantic", "ref": "warehouse-floor-2" },
+      "expected_match": true
+    },
+    {
+      "id": "spatial-05-semantic-anchor-mismatch",
+      "description": "Different semantic ref anchors reject",
+      "location_a": { "kind": "semantic", "ref": "zone-A" },
+      "location_b": { "kind": "semantic", "ref": "zone-B" },
+      "expected_match": false
+    }
+  ]
+}

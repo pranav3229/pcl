@@ -1,0 +1,7 @@
+{
+  "id": "offer-humanoid-pick-place",
+  "declaration_id": "cap-pick-place-humanoid",
+  "entity_id": "humanoid-alpha",
+  "state": { "status": "idle" },
+  "availability": { "accepts_work": true }
+}

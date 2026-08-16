@@ -1,0 +1,42 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-turnkey-production-delivery",
+  "entity_id": "factory-cell-4",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/manufacturing/v0",
+    "term": "manufacture_and_deliver",
+    "label": "Turnkey Manufacture and Delivery"
+  },
+  "summary": "Turnkey CNC machining, inspection, and local delivery",
+  "mode": "discrete",
+  "composed_of": [
+    "cap-manufacture-cnc",
+    "cap-transport-robot17"
+  ],
+  "inputs": [
+    { "name": "cad_model", "role": "artifact", "value_kind": "file_ref", "required": true },
+    { "name": "material", "role": "object", "value_kind": "entity_ref", "required": true },
+    { "name": "destination", "role": "destination", "value_kind": "location_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "delivered_part", "role": "object", "value_kind": "entity_ref" }
+  ],
+  "constraints": [
+    { "name": "tolerance", "quantity": { "value": 0.05, "unit": "mm", "comparator": "gte" } },
+    { "name": "deadline", "quantity": { "value": 48, "unit": "h", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "http",
+    "target": "https://cell4.factory.example/api/v1/jobs",
+    "operation": "POST",
+    "parameters_map": {
+      "job.cad_file": "inputs.cad_model.ref",
+      "job.material_id": "inputs.material.ref",
+      "job.dropoff": "inputs.destination.ref"
+    },
+    "metadata": {
+      "timeout_seconds": 120,
+      "auth_type": "bearer"
+    }
+  }
+}

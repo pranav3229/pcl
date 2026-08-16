@@ -1,0 +1,30 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-pick-place-humanoid",
+  "entity_id": "humanoid-alpha",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/manipulation/v0",
+    "term": "pick_and_place"
+  },
+  "inputs": [
+    { "name": "object", "role": "object", "value_kind": "entity_ref", "required": true },
+    { "name": "source", "role": "origin", "value_kind": "location_ref", "required": true },
+    { "name": "target", "role": "destination", "value_kind": "location_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "placed_object", "role": "object", "value_kind": "entity_ref" }
+  ],
+  "constraints": [
+    { "name": "max_object_mass", "quantity": { "value": 5, "unit": "kg", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "ros2",
+    "target": "/humanoid_alpha",
+    "operation": "pick_place",
+    "parameters_map": {
+      "object": "inputs.object",
+      "source": "inputs.source",
+      "target": "inputs.target"
+    }
+  }
+}

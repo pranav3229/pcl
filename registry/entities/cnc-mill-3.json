@@ -1,0 +1,7 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cnc-mill-3",
+  "name": "CNC Mill 3",
+  "entity_type": { "vocabulary": "https://pcl.dev/vocab/core/v0", "term": "cnc_machine" },
+  "controller": "org:precision-parts"
+}

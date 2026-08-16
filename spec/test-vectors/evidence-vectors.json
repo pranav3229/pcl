@@ -1,0 +1,50 @@
+{
+  "title": "PCL Phase 4 Cryptographic Evidence Test Vectors",
+  "version": "0.1.0",
+  "canonicalization_standard": "RFC 8785 JSON Canonicalization Scheme (JCS)",
+  "vectors": [
+    {
+      "vector_id": "vec-ed25519-01",
+      "description": "Standard valid Ed25519 PCL Evidence test vector",
+      "notice": "NON-SECRET RFC 8032 TEST SEED (01234567890123456789012345678901 in ASCII hex). NEVER USE IN PRODUCTION.",
+      "algorithm": "ed25519",
+      "private_key_seed_hex": "3031323334353637383930313233343536373839303132333435363738393031",
+      "public_key_b64": "e8MHlRjtEdoDNghb9pYpIP+H+zxNYwqbWMthU2dPXdY=",
+      "unsigned_evidence_payload": {
+        "pcl_version": "0.1.0",
+        "id": "evi-vector-001",
+        "execution_id": "exec-vector-77",
+        "intent_id": "intent-transport-01",
+        "declaration_id": "cap-transport-robot17",
+        "entity_id": "robot-17",
+        "timestamp": "2026-08-16T12:00:00Z",
+        "outcome": "completed",
+        "summary": "Transport completed on time",
+        "observed_outputs": {
+          "delivered_object": {
+            "ref": "package-123"
+          }
+        },
+        "observed_metrics": {
+          "duration_minutes": 14,
+          "distance_km": 1.2
+        },
+        "artifacts": [
+          {
+            "type": "delivery_receipt",
+            "uri": "https://storage.pcl.dev/r/123.pdf",
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "extensions": {}
+      },
+      "canonical_json_utf8": "{\"artifacts\":[{\"digest\":\"sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855\",\"type\":\"delivery_receipt\",\"uri\":\"https://storage.pcl.dev/r/123.pdf\"}],\"declaration_id\":\"cap-transport-robot17\",\"entity_id\":\"robot-17\",\"execution_id\":\"exec-vector-77\",\"extensions\":{},\"id\":\"evi-vector-001\",\"intent_id\":\"intent-transport-01\",\"observed_metrics\":{\"distance_km\":1.2,\"duration_minutes\":14},\"observed_outputs\":{\"delivered_object\":{\"ref\":\"package-123\"}},\"outcome\":\"completed\",\"pcl_version\":\"0.1.0\",\"summary\":\"Transport completed on time\",\"timestamp\":\"2026-08-16T12:00:00Z\"}",
+      "sha256_digest": "sha256:5177d58b8e0d333507b65d974fab0ef8b422e70aa034907fcab829ec7f24d2d6",
+      "signature_b64": "CN+6h5M383fCwx1d9fVPmur37Ie2+SXWVguq/vYdo+xKOLusmwvMK8SJ01kRIGJZ2d7W6y1e3bipQRYHptOcAg==",
+      "expected_verification": {
+        "valid": true,
+        "integrity": "verified"
+      }
+    }
+  ]
+}

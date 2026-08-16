@@ -1,0 +1,47 @@
+{
+  "title": "PCL Conformance Test Vectors: Evidence Cryptographic Verification",
+  "version": "0.1.0",
+  "vectors": [
+    {
+      "id": "veri-01-ed25519-valid",
+      "description": "Standard valid Ed25519 signed evidence document",
+      "algorithm": "ed25519",
+      "public_key_b64": "e8MHlRjtEdoDNghb9pYpIP+H+zxNYwqbWMthU2dPXdY=",
+      "evidence_document": {
+        "pcl_version": "0.1.0",
+        "id": "evi-vector-001",
+        "execution_id": "exec-vector-77",
+        "intent_id": "intent-transport-01",
+        "declaration_id": "cap-transport-robot17",
+        "entity_id": "robot-17",
+        "timestamp": "2026-08-16T12:00:00Z",
+        "outcome": "completed",
+        "summary": "Transport completed on time",
+        "observed_outputs": { "delivered_object": { "ref": "package-123" } },
+        "observed_metrics": { "duration_minutes": 14, "distance_km": 1.2 },
+        "artifacts": [
+          {
+            "type": "delivery_receipt",
+            "uri": "https://storage.pcl.dev/r/123.pdf",
+            "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        ],
+        "attestations": [
+          {
+            "issuer": "robot-17",
+            "role": "provider",
+            "algorithm": "ed25519",
+            "public_key": "e8MHlRjtEdoDNghb9pYpIP+H+zxNYwqbWMthU2dPXdY=",
+            "timestamp": "2026-08-16T12:00:05Z",
+            "signature": "CN+6h5M383fCwx1d9fVPmur37Ie2+SXWVguq/vYdo+xKOLusmwvMK8SJ01kRIGJZ2d7W6y1e3bipQRYHptOcAg=="
+          }
+        ]
+      },
+      "expected_verification": {
+        "valid": true,
+        "integrity": "verified",
+        "provenance": "verified"
+      }
+    }
+  ]
+}

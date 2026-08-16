@@ -1,0 +1,67 @@
+[
+  {
+    "id": "FINDING-001",
+    "severity": "critical",
+    "category": "git_repository_hygiene",
+    "file": ".git",
+    "line": 1,
+    "finding": "PCL directory is currently an uninitialized subfolder inside a user home-directory git repository (C:/Users/91961).",
+    "evidence": "Command `git rev-parse --show-toplevel` returned `C:/Users/91961` with user home directory tracked files.",
+    "impact": "If pushed directly from the parent git context, unrelated private personal files from C:/Users/91961 could be exposed.",
+    "recommended_action": "Initialize a clean standalone Git repository inside the PCL root directory (`git init`) before pushing to GitHub.",
+    "director_decision_required": false,
+    "release_blocking": true
+  },
+  {
+    "id": "FINDING-002",
+    "severity": "high",
+    "category": "legal_licensing",
+    "file": "README.md",
+    "line": 174,
+    "finding": "Open-source license has not been formally approved by the Project Director.",
+    "evidence": "README.md notes license selection is pending director decision; docs/OPEN_SOURCE_TODO.md lists Apache 2.0 / MIT as options.",
+    "impact": "Publishing without an explicit license creates legal ambiguity regarding copyright and commercial usage rights.",
+    "recommended_action": "Project Director formally approves Apache 2.0 or MIT license and commits the standard LICENSE file.",
+    "director_decision_required": true,
+    "release_blocking": true
+  },
+  {
+    "id": "FINDING-003",
+    "severity": "medium",
+    "category": "security_disclosure",
+    "file": "SECURITY.md",
+    "line": 18,
+    "finding": "Security vulnerability contact email is currently a placeholder notice.",
+    "evidence": "SECURITY.md specifies 'The project director will designate the official private security contact email'.",
+    "impact": "External security researchers finding cryptographic or parsing vulnerabilities would have to disclose via public issues or maintainer DMs.",
+    "recommended_action": "Project Director designates an official security intake address (e.g., security@pcl.dev or GitHub Private Vulnerability Reporting).",
+    "director_decision_required": true,
+    "release_blocking": false
+  },
+  {
+    "id": "FINDING-004",
+    "severity": "low",
+    "category": "vocabulary_uris",
+    "file": "spec/SPEC.md",
+    "line": 75,
+    "finding": "Domain vocabulary URIs (e.g. https://pcl.dev/vocab/logistics/v0) are illustrative test URIs and not yet live web endpoints.",
+    "evidence": "Spec notes that PCL core does not dereference vocabulary URIs at runtime.",
+    "impact": "External developers attempting to fetch vocabulary URIs via HTTP GET will receive 404 until static hosting is deployed.",
+    "recommended_action": "Ensure documentation explicitly states that vocabulary URIs serve as global unique string identifiers, with static web landing pages planned for future hosting.",
+    "director_decision_required": false,
+    "release_blocking": false
+  },
+  {
+    "id": "FINDING-005",
+    "severity": "info",
+    "category": "test_vectors",
+    "file": "spec/test-vectors/evidence-vectors.json",
+    "line": 10,
+    "finding": "Cryptographic test vectors contain RFC 8032 deterministic test private key seeds.",
+    "evidence": "spec/test-vectors/evidence-vectors.json explicitly tags seed with NON-SECRET RFC 8032 TEST SEED notice.",
+    "impact": "Safe for public release because test keys are standard public RFC vectors and not production operational keys.",
+    "recommended_action": "Maintain explicit non-secret notice in test vector documentation.",
+    "director_decision_required": false,
+    "release_blocking": false
+  }
+]

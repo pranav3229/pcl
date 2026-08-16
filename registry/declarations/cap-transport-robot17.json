@@ -1,0 +1,35 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-transport-robot17",
+  "entity_id": "robot-17",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/logistics/v0",
+    "term": "package_transport",
+    "label": "Package Transport"
+  },
+  "summary": "Transport packages within warehouse floor 2",
+  "inputs": [
+    { "name": "object", "role": "object", "value_kind": "entity_ref", "required": true },
+    { "name": "origin", "role": "origin", "value_kind": "location_ref", "required": true },
+    { "name": "destination", "role": "destination", "value_kind": "location_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "delivered_object", "role": "object", "value_kind": "entity_ref" }
+  ],
+  "constraints": [
+    { "name": "max_payload", "quantity": { "value": 25, "unit": "kg", "comparator": "lte" } },
+    { "name": "max_distance", "quantity": { "value": 500, "unit": "m", "comparator": "lte" } },
+    { "name": "deadline", "quantity": { "value": 30, "unit": "min", "comparator": "lte" } },
+    { "name": "budget", "quantity": { "value": 100, "unit": "INR", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "ros2",
+    "target": "/robot17",
+    "operation": "transport_package",
+    "parameters_map": {
+      "object": "inputs.object",
+      "from": "inputs.origin",
+      "to": "inputs.destination"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "offer-drone-inspection",
+  "declaration_id": "cap-aerial-inspection-drone",
+  "entity_id": "drone-survey-1",
+  "state": { "status": "idle" },
+  "availability": { "accepts_work": false, "reason": "wind_speed_exceeded" }
+}

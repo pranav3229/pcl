@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcl.dev/schemas/v0/evidence.json",
+  "title": "PCL Evidence",
+  "type": "object",
+  "required": [
+    "pcl_version",
+    "id",
+    "execution_id",
+    "intent_id",
+    "declaration_id",
+    "entity_id",
+    "timestamp",
+    "outcome"
+  ],
+  "properties": {
+    "pcl_version": { "$ref": "common.json#/$defs/pcl_version" },
+    "id": { "type": "string", "minLength": 1 },
+    "execution_id": { "type": "string", "minLength": 1 },
+    "intent_id": { "type": "string", "minLength": 1 },
+    "declaration_id": { "type": "string", "minLength": 1 },
+    "entity_id": { "type": "string", "minLength": 1 },
+    "timestamp": { "type": "string", "format": "date-time" },
+    "outcome": {
+      "type": "string",
+      "enum": ["completed", "partial", "failed", "cancelled"]
+    },
+    "summary": { "type": "string" },
+    "observed_outputs": { "type": "object" },
+    "observed_metrics": { "type": "object" },
+    "artifacts": {
+      "type": "array",
+      "items": { "$ref": "common.json#/$defs/ArtifactRef" }
+    },
+    "attestations": {
+      "type": "array",
+      "items": { "$ref": "common.json#/$defs/Attestation" }
+    },
+    "extensions": { "type": "object" }
+  },
+  "additionalProperties": false
+}

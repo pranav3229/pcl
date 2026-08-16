@@ -1,0 +1,23 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-transport-robot17-light",
+  "entity_id": "robot-17",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/logistics/v0",
+    "term": "package_transport"
+  },
+  "summary": "Light payload transport only",
+  "inputs": [
+    { "name": "object", "role": "object", "value_kind": "entity_ref", "required": true },
+    { "name": "origin", "role": "origin", "value_kind": "location_ref", "required": true },
+    { "name": "destination", "role": "destination", "value_kind": "location_ref", "required": true }
+  ],
+  "constraints": [
+    { "name": "max_payload", "quantity": { "value": 5, "unit": "kg", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "ros2",
+    "target": "/robot17",
+    "operation": "transport_package"
+  }
+}

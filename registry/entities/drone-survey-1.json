@@ -1,0 +1,10 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "drone-survey-1",
+  "name": "Survey Drone 1",
+  "entity_type": {
+    "vocabulary": "https://pcl.dev/vocab/core/v0",
+    "term": "aerial_drone"
+  },
+  "controller": "org:skyinspect"
+}

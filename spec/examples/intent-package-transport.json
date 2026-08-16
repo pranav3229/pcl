@@ -1,0 +1,19 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "intent-package-transport-001",
+  "goal": {
+    "vocabulary": "https://pcl.dev/vocab/logistics/v0",
+    "term": "package_transport",
+    "label": "Package Transport"
+  },
+  "inputs": {
+    "object": { "ref": "package-123" },
+    "origin": { "ref": "warehouse-floor-2" },
+    "destination": { "ref": "zone-B" }
+  },
+  "constraints": {
+    "max_payload": { "value": 10, "unit": "kg", "comparator": "lte" },
+    "deadline": { "value": 10, "unit": "min", "comparator": "lte" },
+    "budget": { "value": 50, "unit": "INR", "comparator": "lte" }
+  }
+}

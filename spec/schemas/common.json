@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcl.dev/schemas/v0/common.json",
+  "title": "PCL Common Types",
+  "type": "object",
+  "$defs": {
+    "pcl_version": {
+      "type": "string",
+      "pattern": "^0\\.[0-9]+\\.[0-9]+$"
+    },
+    "SemanticRef": {
+      "type": "object",
+      "required": ["term"],
+      "properties": {
+        "vocabulary": { "type": "string", "format": "uri" },
+        "term": { "type": "string", "minLength": 1 },
+        "label": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Quantity": {
+      "type": "object",
+      "required": ["value", "unit"],
+      "properties": {
+        "value": { "type": "number" },
+        "unit": { "type": "string", "minLength": 1 },
+        "comparator": {
+          "type": "string",
+          "enum": ["eq", "lte", "gte", "lt", "gt"],
+          "default": "eq"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Range": {
+      "type": "object",
+      "required": ["min", "max"],
+      "properties": {
+        "min": { "type": "number" },
+        "max": { "type": "number" },
+        "unit": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "SetPredicate": {
+      "type": "object",
+      "required": ["in"],
+      "properties": {
+        "in": {
+          "type": "array",
+          "items": { "type": ["string", "number", "boolean"] },
+          "minItems": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "ValuePredicate": {
+      "type": "object",
+      "required": ["value"],
+      "properties": {
+        "value": { "type": ["string", "number", "boolean"] },
+        "comparator": {
+          "type": "string",
+          "enum": ["eq", "neq"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "ConstraintPredicate": {
+      "oneOf": [
+        { "$ref": "#/$defs/Quantity" },
+        { "$ref": "#/$defs/Range" },
+        { "$ref": "#/$defs/SetPredicate" },
+        { "$ref": "#/$defs/ValuePredicate" }
+      ]
+    },
+    "IOContract": {
+      "type": "object",
+      "required": ["name", "role", "value_kind"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "role": {
+          "type": "string",
+          "enum": ["object", "origin", "destination", "parameter", "artifact", "report"]
+        },
+        "value_kind": {
+          "type": "string",
+          "enum": ["entity_ref", "location_ref", "quantity", "file_ref", "string", "structured"]
+        },
+        "required": { "type": "boolean", "default": true },
+        "schema_ref": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": false
+    },
+    "ConstraintSpec": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "quantity": { "$ref": "#/$defs/Quantity" },
+        "range": { "$ref": "#/$defs/Range" },
+        "in": {
+          "type": "array",
+          "items": { "type": ["string", "number", "boolean"] },
+          "minItems": 1
+        },
+        "value": { "type": ["string", "number", "boolean"] },
+        "applies_to": {
+          "type": "string",
+          "enum": ["capability", "input", "output"],
+          "default": "capability"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Location": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": ["semantic", "coordinates", "uri"]
+        },
+        "ref": { "type": "string" },
+        "lat": { "type": "number" },
+        "lon": { "type": "number" },
+        "alt": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+    "ExecutionBinding": {
+      "type": "object",
+      "required": ["protocol"],
+      "properties": {
+        "protocol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "target": { "type": "string" },
+        "operation": { "type": "string" },
+        "parameters_map": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "metadata": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "RuntimeState": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["idle", "busy", "charging", "offline", "maintenance", "fault", "active"]
+        },
+        "detail": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Availability": {
+      "type": "object",
+      "required": ["accepts_work"],
+      "properties": {
+        "accepts_work": { "type": "boolean" },
+        "reason": { "type": "string" },
+        "valid_until": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "schedule": {
+          "type": "array",
+          "items": { "type": "string", "format": "date-time" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "IntentInputValue": {
+      "type": "object",
+      "properties": {
+        "ref": { "type": "string" },
+        "value": {},
+        "quantity": { "$ref": "#/$defs/Quantity" }
+      },
+      "additionalProperties": false
+    },
+    "ArtifactRef": {
+      "type": "object",
+      "required": ["type", "uri", "digest"],
+      "properties": {
+        "type": { "type": "string", "minLength": 1 },
+        "uri": { "type": "string", "minLength": 1 },
+        "digest": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+:[a-fA-F0-9]+$"
+        },
+        "size_bytes": { "type": "integer", "minimum": 0 },
+        "description": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "Attestation": {
+      "type": "object",
+      "required": ["issuer", "role", "algorithm", "timestamp", "signature"],
+      "properties": {
+        "issuer": { "type": "string", "minLength": 1 },
+        "role": {
+          "type": "string",
+          "enum": ["provider", "consumer", "sensor_authority", "inspector", "third_party", "verifier"]
+        },
+        "algorithm": {
+          "type": "string",
+          "enum": ["ed25519", "ecdsa-p256-sha256"]
+        },
+        "public_key_ref": { "type": "string" },
+        "public_key": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "signature": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "id": "offer-robot17-transport-light",
+  "declaration_id": "cap-transport-robot17-light",
+  "entity_id": "robot-17",
+  "state": { "status": "idle" },
+  "availability": { "accepts_work": true }
+}

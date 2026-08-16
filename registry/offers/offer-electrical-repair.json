@@ -1,0 +1,7 @@
+{
+  "id": "offer-electrical-repair",
+  "declaration_id": "cap-electrical-repair",
+  "entity_id": "electrician-service-mumbai",
+  "state": { "status": "idle" },
+  "availability": { "accepts_work": true }
+}

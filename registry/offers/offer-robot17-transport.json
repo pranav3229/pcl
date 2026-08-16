@@ -1,0 +1,8 @@
+{
+  "id": "offer-robot17-transport",
+  "declaration_id": "cap-transport-robot17",
+  "entity_id": "robot-17",
+  "state": { "status": "idle" },
+  "availability": { "accepts_work": true },
+  "location": { "kind": "semantic", "ref": "warehouse-floor-2" }
+}

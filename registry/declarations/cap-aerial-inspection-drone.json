@@ -1,0 +1,28 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-aerial-inspection-drone",
+  "entity_id": "drone-survey-1",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/inspection/v0",
+    "term": "aerial_inspection"
+  },
+  "inputs": [
+    { "name": "target_area", "role": "parameter", "value_kind": "location_ref", "required": true },
+    { "name": "checklist", "role": "parameter", "value_kind": "file_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "inspection_report", "role": "report", "value_kind": "file_ref" }
+  ],
+  "constraints": [
+    { "name": "max_wind_speed", "quantity": { "value": 12, "unit": "m/s", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "wot",
+    "target": "https://drone.example/td/survey-1",
+    "operation": "inspect_area",
+    "parameters_map": {
+      "area": "inputs.target_area",
+      "checklist": "inputs.checklist"
+    }
+  }
+}

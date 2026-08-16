@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pcl-sdk"
+version = "0.1.0a1"
+description = "Physical Capability Language — reference SDK"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Pranav Tanna" }]
+dependencies = [
+    "pydantic>=2.0",
+    "jsonschema>=4.20",
+    "cryptography>=42.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+pcl = "pcl.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["pcl*"]
+
+[tool.pytest.ini_options]
+testpaths = ["../../tests"]

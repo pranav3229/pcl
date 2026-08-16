@@ -1,0 +1,29 @@
+{
+  "title": "PCL Conformance Test Vectors: RFC 8785 JSON Canonicalization Scheme (JCS)",
+  "version": "0.1.0",
+  "vectors": [
+    {
+      "id": "jcs-01-key-sorting-whitespace",
+      "description": "Object keys sorted lexicographically by UTF-16 code units with no outer whitespace",
+      "input_json": {
+        "z": 10,
+        "a": "hello",
+        "m": { "nested_b": true, "nested_a": null },
+        "list": [3, 2, 1]
+      },
+      "expected_canonical_utf8": "{\"a\":\"hello\",\"list\":[3,2,1],\"m\":{\"nested_a\":null,\"nested_b\":true},\"z\":10}",
+      "expected_sha256": "sha256:4bfc872f71ec526d957f6e4879bb9743e052e0396a7e916493c9a5517d19350c"
+    },
+    {
+      "id": "jcs-02-number-formatting",
+      "description": "Integer floats formatted without trailing decimals per ECMAScript / JCS",
+      "input_json": {
+        "int_float": 10.0,
+        "true_float": 10.5,
+        "zero": 0.0
+      },
+      "expected_canonical_utf8": "{\"int_float\":10,\"true_float\":10.5,\"zero\":0}",
+      "expected_sha256": "sha256:2b91d5712f446d76c0967dc9bb921a8bcd4e4bd5b858a04d85943fb2fa9d34ea"
+    }
+  ]
+}

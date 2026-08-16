@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcl.dev/schemas/v0/intent.json",
+  "title": "PCL Intent",
+  "type": "object",
+  "required": ["pcl_version", "id", "goal", "inputs"],
+  "properties": {
+    "pcl_version": { "$ref": "common.json#/$defs/pcl_version" },
+    "id": { "type": "string", "minLength": 1 },
+    "goal": { "$ref": "common.json#/$defs/SemanticRef" },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": { "$ref": "common.json#/$defs/IntentInputValue" }
+    },
+    "required_outputs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": { "$ref": "common.json#/$defs/ConstraintPredicate" }
+    },
+    "preferences": {
+      "type": "object",
+      "properties": {
+        "provider_id": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "extensions": { "type": "object" }
+  },
+  "additionalProperties": false
+}

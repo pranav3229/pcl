@@ -1,0 +1,29 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-electrical-repair",
+  "entity_id": "electrician-service-mumbai",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/services/v0",
+    "term": "electrical_repair"
+  },
+  "inputs": [
+    { "name": "fault_description", "role": "parameter", "value_kind": "string", "required": true },
+    { "name": "site_location", "role": "origin", "value_kind": "location_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "repair_report", "role": "report", "value_kind": "file_ref" }
+  ],
+  "constraints": [
+    { "name": "response_time", "quantity": { "value": 4, "unit": "h", "comparator": "lte" } },
+    { "name": "licensed_electrician", "value": true }
+  ],
+  "execution": {
+    "protocol": "http",
+    "target": "https://api.mumbai-electrical.example/jobs",
+    "operation": "POST",
+    "parameters_map": {
+      "description": "inputs.fault_description",
+      "location": "inputs.site_location"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-charging-ev42",
+  "entity_id": "ev-station-42",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/energy/v0",
+    "term": "charging"
+  },
+  "inputs": [
+    { "name": "vehicle", "role": "object", "value_kind": "entity_ref", "required": true },
+    { "name": "target_soc", "role": "parameter", "value_kind": "quantity", "required": true }
+  ],
+  "outputs": [
+    { "name": "charged_vehicle", "role": "object", "value_kind": "entity_ref" }
+  ],
+  "constraints": [
+    { "name": "max_power", "quantity": { "value": 150, "unit": "kW", "comparator": "lte" } },
+    { "name": "connector_type", "value": "CCS2" }
+  ],
+  "execution": {
+    "protocol": "http",
+    "target": "https://chargegrid.example/stations/42/charge",
+    "operation": "POST",
+    "parameters_map": { "vehicle": "inputs.vehicle", "soc": "inputs.target_soc" }
+  }
+}

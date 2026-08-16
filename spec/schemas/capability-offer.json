@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcl.dev/schemas/v0/capability-offer.json",
+  "title": "PCL CapabilityOffer",
+  "type": "object",
+  "required": ["declaration_id", "entity_id", "state", "availability"],
+  "properties": {
+    "id": { "type": "string" },
+    "declaration_id": { "type": "string", "minLength": 1 },
+    "entity_id": { "type": "string", "minLength": 1 },
+    "state": { "$ref": "common.json#/$defs/RuntimeState" },
+    "availability": { "$ref": "common.json#/$defs/Availability" },
+    "location": { "$ref": "common.json#/$defs/Location" },
+    "resources": { "type": "object" },
+    "extensions": { "type": "object" }
+  },
+  "additionalProperties": false
+}

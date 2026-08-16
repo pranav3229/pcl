@@ -1,0 +1,7 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "electrician-service-mumbai",
+  "name": "Mumbai Electrical Repairs",
+  "entity_type": { "vocabulary": "https://pcl.dev/vocab/core/v0", "term": "human_service" },
+  "controller": "org:mumbai-electrical"
+}

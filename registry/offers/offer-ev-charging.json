@@ -1,0 +1,7 @@
+{
+  "id": "offer-ev-charging",
+  "declaration_id": "cap-charging-ev42",
+  "entity_id": "ev-station-42",
+  "state": { "status": "charging" },
+  "availability": { "accepts_work": false, "reason": "connector_occupied" }
+}

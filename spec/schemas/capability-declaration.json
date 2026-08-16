@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pcl.dev/schemas/v0/capability-declaration.json",
+  "title": "PCL CapabilityDeclaration",
+  "type": "object",
+  "required": ["pcl_version", "id", "entity_id", "semantic_type", "inputs", "execution"],
+  "properties": {
+    "pcl_version": { "$ref": "common.json#/$defs/pcl_version" },
+    "id": { "type": "string", "minLength": 1 },
+    "entity_id": { "type": "string", "minLength": 1 },
+    "semantic_type": { "$ref": "common.json#/$defs/SemanticRef" },
+    "summary": { "type": "string" },
+    "mode": {
+      "type": "string",
+      "enum": ["discrete", "continuous"],
+      "default": "discrete"
+    },
+    "inputs": {
+      "type": "array",
+      "items": { "$ref": "common.json#/$defs/IOContract" }
+    },
+    "outputs": {
+      "type": "array",
+      "items": { "$ref": "common.json#/$defs/IOContract" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "common.json#/$defs/ConstraintSpec" }
+    },
+    "execution": { "$ref": "common.json#/$defs/ExecutionBinding" },
+    "composed_of": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "evidence_spec": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "extensions": { "type": "object" }
+  },
+  "additionalProperties": false
+}

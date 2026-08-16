@@ -1,0 +1,11 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "robot-17",
+  "name": "Warehouse Robot 17",
+  "entity_type": {
+    "vocabulary": "https://pcl.dev/vocab/core/v0",
+    "term": "mobile_robot"
+  },
+  "controller": "org:acme-robotics",
+  "location": { "kind": "semantic", "ref": "warehouse-floor-2" }
+}

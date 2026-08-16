@@ -1,0 +1,147 @@
+{
+  "title": "PCL Conformance Test Vectors: Capability Matching",
+  "version": "0.1.0",
+  "vectors": [
+    {
+      "id": "match-01-success",
+      "description": "Exact goal match with satisfied constraints and available state",
+      "intent": {
+        "pcl_version": "0.1.0",
+        "id": "intent-pkg-1",
+        "goal": { "vocabulary": "https://pcl.dev/vocab/logistics/v0", "term": "package_transport" },
+        "inputs": { "target": { "ref": "pkg-100" } },
+        "constraints": { "payload": { "value": 10, "unit": "kg", "comparator": "lte" } }
+      },
+      "declaration": {
+        "pcl_version": "0.1.0",
+        "id": "cap-transport-robot17",
+        "entity_id": "robot-17",
+        "semantic_type": { "vocabulary": "https://pcl.dev/vocab/logistics/v0", "term": "package_transport" },
+        "inputs": [{ "name": "target", "role": "object", "value_kind": "entity_ref", "required": true }],
+        "constraints": [{ "name": "payload", "quantity": { "value": 25, "unit": "kg", "comparator": "lte" } }],
+        "execution": { "protocol": "ros2", "target": "/amr/transport" }
+      },
+      "offer": {
+        "id": "offer-robot17",
+        "declaration_id": "cap-transport-robot17",
+        "entity_id": "robot-17",
+        "state": { "status": "idle" },
+        "availability": { "accepts_work": true }
+      },
+      "expected_match": true,
+      "expected_score": 100.5,
+      "expected_satisfied": ["goal", "inputs", "constraints", "state", "availability"]
+    },
+    {
+      "id": "match-02-goal-mismatch",
+      "description": "Mismatched semantic term fails closed",
+      "intent": {
+        "pcl_version": "0.1.0",
+        "id": "intent-cnc",
+        "goal": { "vocabulary": "https://pcl.dev/vocab/mfg/v0", "term": "cnc_machining" },
+        "inputs": {}
+      },
+      "declaration": {
+        "pcl_version": "0.1.0",
+        "id": "cap-transport-robot17",
+        "entity_id": "robot-17",
+        "semantic_type": { "vocabulary": "https://pcl.dev/vocab/logistics/v0", "term": "package_transport" },
+        "inputs": [],
+        "execution": { "protocol": "http", "target": "https://api.example.com" }
+      },
+      "offer": {
+        "id": "offer-robot17",
+        "declaration_id": "cap-transport-robot17",
+        "entity_id": "robot-17",
+        "state": { "status": "idle" },
+        "availability": { "accepts_work": true }
+      },
+      "expected_match": false
+    },
+    {
+      "id": "match-03-constraint-violation",
+      "description": "Provider capacity cannot satisfy required payload",
+      "intent": {
+        "pcl_version": "0.1.0",
+        "id": "intent-heavy",
+        "goal": { "vocabulary": "https://pcl.dev/vocab/logistics/v0", "term": "package_transport" },
+        "inputs": {},
+        "constraints": { "payload": { "value": 50, "unit": "kg", "comparator": "lte" } }
+      },
+      "declaration": {
+        "pcl_version": "0.1.0",
+        "id": "cap-light",
+        "entity_id": "drone-1",
+        "semantic_type": { "vocabulary": "https://pcl.dev/vocab/logistics/v0", "term": "package_transport" },
+        "inputs": [],
+        "constraints": [{ "name": "payload", "quantity": { "value": 5, "unit": "kg", "comparator": "lte" } }],
+        "execution": { "protocol": "http", "target": "https://api.example.com" }
+      },
+      "offer": {
+        "id": "offer-drone",
+        "declaration_id": "cap-light",
+        "entity_id": "drone-1",
+        "state": { "status": "idle" },
+        "availability": { "accepts_work": true }
+      },
+      "expected_match": false,
+      "expected_diagnostics": [
+        { "constraint": "payload", "result": "rejected" }
+      ]
+    },
+    {
+      "id": "match-04-state-offline-rejected",
+      "description": "Hardware in offline state is rejected by state gate",
+      "intent": {
+        "pcl_version": "0.1.0",
+        "id": "intent-task",
+        "goal": { "term": "task" },
+        "inputs": {}
+      },
+      "declaration": {
+        "pcl_version": "0.1.0",
+        "id": "cap-task",
+        "entity_id": "machine-1",
+        "semantic_type": { "term": "task" },
+        "inputs": [],
+        "execution": { "protocol": "opcua", "target": "opc.tcp://10.0.0.1:4840" }
+      },
+      "offer": {
+        "id": "offer-machine",
+        "declaration_id": "cap-task",
+        "entity_id": "machine-1",
+        "state": { "status": "offline" },
+        "availability": { "accepts_work": true }
+      },
+      "expected_match": false
+    },
+    {
+      "id": "match-05-preference-boost",
+      "description": "Matching preferred provider adds +1000.0 preference boost",
+      "intent": {
+        "pcl_version": "0.1.0",
+        "id": "intent-pref",
+        "goal": { "term": "task" },
+        "inputs": {},
+        "preferences": { "provider_id": "robot-preferred" }
+      },
+      "declaration": {
+        "pcl_version": "0.1.0",
+        "id": "cap-task",
+        "entity_id": "robot-preferred",
+        "semantic_type": { "term": "task" },
+        "inputs": [],
+        "execution": { "protocol": "http", "target": "https://api.example.com" }
+      },
+      "offer": {
+        "id": "offer-pref",
+        "declaration_id": "cap-task",
+        "entity_id": "robot-preferred",
+        "state": { "status": "idle" },
+        "availability": { "accepts_work": true }
+      },
+      "expected_match": true,
+      "expected_score": 1100.5
+    }
+  ]
+}

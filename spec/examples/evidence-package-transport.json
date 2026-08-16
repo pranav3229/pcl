@@ -1,0 +1,40 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "evi-transport-robot17-001",
+  "execution_id": "exec-7701-a1",
+  "intent_id": "intent-package-transport-001",
+  "declaration_id": "cap-transport-robot17",
+  "entity_id": "robot-17",
+  "timestamp": "2026-08-16T12:00:00Z",
+  "outcome": "completed",
+  "summary": "Package delivered to warehouse zone B dropoff bay",
+  "observed_outputs": {
+    "delivered_object": {
+      "ref": "package-123"
+    }
+  },
+  "observed_metrics": {
+    "max_payload": 10,
+    "deadline": 8,
+    "budget": 45
+  },
+  "artifacts": [
+    {
+      "type": "dropoff_photo",
+      "uri": "https://storage.pcl.dev/blobs/robot17-dropoff-123.jpg",
+      "digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "description": "Optical confirmation of package dropoff"
+    }
+  ],
+  "attestations": [
+    {
+      "issuer": "robot-17",
+      "role": "provider",
+      "algorithm": "ed25519",
+      "public_key": "Ot2yxtcRvibMwLOoW0NKKtaHv1XdZE5VpfeVCFo5+2g=",
+      "timestamp": "2026-08-16T06:40:13.191193+00:00",
+      "signature": "1iKszxnL2xnonGY6h/WIlcuAeSVFXS+ZJQmdHaKtxl1YNUsVJCKyWXGcNDD3Uu4aLfZcBuSLwVlIq51c/C7eBg=="
+    }
+  ],
+  "extensions": {}
+}
