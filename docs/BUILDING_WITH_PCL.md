@@ -136,5 +136,5 @@ When the mission completes, your onboard controller generates an `Evidence` docu
 | :--- | :--- | :--- |
 | **Physical AI / Agent Layer** | LLM / Foundation Model | Formulates goal intent, selects capability, verifies outcome. |
 | **PCL Protocol Layer** | `pcl-sdk` | Formal capability contracts, deterministic matching, parameter mapping, evidence verification. |
-| **Transport Adapter** | `adapters/ros2.py` | Bridges PCL parameters to native ROS 2 topics and actions. |
+| **Transport Adapter** | `adapters/` (HTTP adapter; ROS 2 / OPC-UA bridges) | Dispatches resolved parameters to external HTTP REST endpoints or native ROS 2 action servers. |
 | **Robotics Control Layer** | ROS 2 / Nav2 / Micro-ROS | Motor control, obstacle avoidance, sensor acquisition. |

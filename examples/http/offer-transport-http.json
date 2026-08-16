@@ -1,0 +1,12 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "offer-transport-http-amr",
+  "declaration_id": "cap-transport-http-amr",
+  "entity_id": "robot-17",
+  "state": {
+    "status": "idle"
+  },
+  "availability": {
+    "accepts_work": true
+  }
+}

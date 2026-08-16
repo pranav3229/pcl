@@ -34,7 +34,7 @@ PCL sits above native execution protocols. It describes **what** a physical prov
        Invocation Binding (Maps Intent parameters to Native Payload)
                  │
                  ▼
-       External Execution (Dispatched via ROS 2 / HTTP / OPC-UA / MQTT)
+       External Execution (Dispatched via HTTP Adapter or Native Transport)
                  │
                  ▼
           Outcome Evidence (Observed Metrics & Sensor Artifact Hashes)
@@ -65,12 +65,12 @@ PCL sits above native execution protocols. It describes **what** a physical prov
     { "name": "max_payload", "quantity": { "value": 25, "unit": "kg", "comparator": "lte" } }
   ],
   "execution": {
-    "protocol": "ros2",
-    "target": "/robot17/deliver",
-    "operation": "send_goal",
+    "protocol": "http",
+    "target": "http://127.0.0.1:8080/api/v1/transport",
+    "operation": "POST",
     "parameters_map": {
-      "goal.package_id": "inputs.object.ref",
-      "goal.target_bay": "inputs.destination.ref"
+      "object": "inputs.object.ref",
+      "destination": "inputs.destination.ref"
     }
   }
 }
@@ -92,35 +92,44 @@ PCL sits above native execution protocols. It describes **what** a physical prov
 }
 ```
 
-### 3. Match & Parameter Resolution
+### 3. Match, Parameter Resolution & Real HTTP Invocation
 ```bash
-# Match intent against local registry
+# 1. Match intent against local capability registry
 python sdk/python/pcl/cli.py match intent-transport.json
 
-# Resolve native ROS 2 parameters
+# 2. Resolve native parameters from Intent
 python sdk/python/pcl/cli.py resolve-binding --declaration cap-transport.json --intent intent-transport.json
-```
 
-**Resolved Native Payload:**
-```json
-{
-  "goal": {
-    "package_id": "package-123",
-    "target_bay": "bay-12"
-  }
-}
+# 3. Dispatch invocation to external endpoint via HTTP adapter
+python sdk/python/pcl/cli.py invoke --declaration cap-transport.json --intent intent-transport.json
 ```
 
 ---
 
 ## Why PCL for Physical AI Developers?
 
-> *"My robot already works. PCL gives me a standardized way to describe what it can do so an external AI agent or fleet dispatcher can discover and invoke that capability without knowing my internal ROS 2 topics or kinematics stack."*
+Robots, CNC workcells, and physical machines already have internal control stacks. PCL provides a standardized capability contract so AI agents and fleet dispatchers can discover, match against, and invoke capabilities without needing custom point-to-point integration code for every device.
 
-- **Protocol Agnostic:** Works across ROS 2, HTTP REST, OPC-UA, W3C Web of Things, and custom protocols.
+- **Transport-Independent Invocation:** Declaratively maps intent to native execution bindings. The v0.1 reference SDK includes a functional HTTP execution adapter; ROS 2, OPC-UA, and MQTT remain reference/future transport bindings.
 - **Deterministic & Fail-Closed:** No non-deterministic LLM hallucinations during matching or verification.
 - **Spatial & Temporal Grounding:** Standardized WGS84 geodesic proximity and TTL availability gating.
 - **Cryptographic Trust:** Post-execution verification using RFC 8785 JSON Canonicalization Scheme (JCS) and Ed25519 signatures.
+
+---
+
+## Runnable End-to-End HTTP Demo
+
+Run a complete 6-stage lifecycle demo against a local mock Autonomous Mobile Robot (AMR) server:
+
+```bash
+# Terminal 1: Start local capability mock server
+python examples/http/server.py
+
+# Terminal 2: Run complete PCL lifecycle (Match -> Resolve -> HTTP Invoke -> Sign -> Verify)
+python examples/http/client.py
+```
+
+See [examples/http/README.md](examples/http/README.md) for full instructions and expected output.
 
 ---
 
@@ -129,8 +138,9 @@ python sdk/python/pcl/cli.py resolve-binding --declaration cap-transport.json --
 - **Protocol Specification:** Version `0.1.0` (Draft)
 - **Release Version:** `v0.1.0-alpha` (Public Alpha)
 - **Python Reference SDK:** `pcl-sdk` `0.1.0a1`
+- **Reference Adapters:** Functional `HttpAdapter` included; ROS 2, OPC-UA, and W3C Web of Things bindings specified as declarative stubs (V1 roadmap).
 - **Release Stage:** **Public Alpha**
-- **Test Suite:** 112/112 unit, adversarial, and conformance tests passing (100% green).
+- **Test Suite:** 120/120 unit, adversarial, and conformance tests passing (100% green).
 - **Decoupled Architecture:** PCL core remains independent of robot runtime engines, workflow DAGs, and blockchain/token bloat.
 
 ---
@@ -140,7 +150,7 @@ python sdk/python/pcl/cli.py resolve-binding --declaration cap-transport.json --
 - 🚀 **[Developer Quickstart](docs/QUICKSTART.md)**: 10-minute walkthrough of declaration, matching, invocation, and verification.
 - 📐 **[Architecture Reference](docs/ARCHITECTURE.md)**: Deep dive into the 5-element meta-model and protocol boundaries.
 - 🛠️ **[Clean-Room Implementation Guide](docs/CLEAN_ROOM_IMPLEMENTATION.md)**: How to implement PCL in Rust, Go, TypeScript, or C++.
-- 🤖 **[Robotics Integration Guide](docs/BUILDING_WITH_PCL.md)**: How Physical AI teams integrate PCL above ROS 2.
+- 🤖 **[Robotics Integration Guide](docs/BUILDING_WITH_PCL.md)**: How Physical AI teams integrate PCL above ROS 2 and HTTP bridges.
 - 📜 **[Normative Core Specification](spec/SPEC.md)**: Authoritative wire format and evaluation rules.
 - 🎯 **[Normative Matching Specification](spec/MATCHING.md)**: 8-gate matching logic and ranking score formula.
 - 🧪 **[Language-Agnostic Conformance Vectors](spec/conformance/)**: Portable JSON test vectors for matching, spatial distance, parameter resolution, JCS canonicalization, and signature verification.
@@ -176,9 +186,11 @@ pcl/
 │   ├── examples/           # Canonical example documents
 │   └── conformance/        # Language-agnostic JSON test vectors
 ├── sdk/python/             # Python reference SDK & CLI tool (`pcl-sdk`)
-├── adapters/               # Optional protocol adapters (ROS 2, HTTP, OPC-UA)
+├── adapters/               # Protocol adapters (Functional HTTP adapter; ROS 2 / OPC-UA stubs)
+├── examples/               # Runnable end-to-end examples (HTTP AMR capability demo)
+│   └── http/
 ├── registry/               # Local capability registry fixtures
-└── tests/                  # Automated test suite (112 tests)
+└── tests/                  # Automated test suite (120 tests)
 ```
 
 ---

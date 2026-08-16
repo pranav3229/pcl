@@ -17,6 +17,12 @@ def _repo_root() -> Path:
     return Path(__file__).resolve().parents[3]
 
 
+# Ensure repository root is in sys.path for adapters package resolution
+_root_str = str(_repo_root())
+if _root_str not in sys.path:
+    sys.path.insert(0, _root_str)
+
+
 def cmd_validate(args: argparse.Namespace) -> int:
     schema_map = {
         "entity": "entity",
@@ -93,6 +99,54 @@ def cmd_resolve_binding(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_invoke(args: argparse.Namespace) -> int:
+    from adapters.base import HttpAdapter, OpcUaAdapter, Ros2Adapter, WotAdapter
+    from pcl.models import CapabilityDeclaration, Intent
+
+    declaration = CapabilityDeclaration.from_file(args.declaration)
+    intent = Intent.from_file(args.intent)
+    binding = declaration.execution
+    if not binding:
+        print("No execution binding defined in declaration.", file=sys.stderr)
+        return 1
+
+    proto = binding.protocol.value if hasattr(binding.protocol, "value") else str(binding.protocol)
+
+    timeout = float(args.timeout) if args.timeout else 10.0
+    if proto == "http":
+        adapter = HttpAdapter(default_timeout=timeout)
+    elif proto == "ros2":
+        adapter = Ros2Adapter()
+    elif proto == "opcua":
+        adapter = OpcUaAdapter()
+    elif proto == "wot":
+        adapter = WotAdapter()
+    else:
+        print(f"Unsupported protocol: {proto}", file=sys.stderr)
+        return 1
+
+    try:
+        result = adapter.invoke(
+            binding,
+            inputs=intent.inputs,
+            context={"constraints": intent.constraints, "timeout": timeout},
+        )
+    except Exception as e:
+        print(f"Adapter invocation raised exception: {e}", file=sys.stderr)
+        return 1
+
+    if result.success:
+        print(f"INVOCATION SUCCESS ({result.protocol} -> {result.target})")
+        if result.payload:
+            print(json.dumps(result.payload, indent=2))
+        return 0
+    else:
+        print(f"INVOCATION FAILED ({result.protocol} -> {result.target}): {result.error}", file=sys.stderr)
+        if result.payload:
+            print(json.dumps(result.payload, indent=2), file=sys.stderr)
+        return 1
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(prog="pcl", description="PCL reference tools")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -117,6 +171,12 @@ def main() -> None:
     resolve_parser.add_argument("--declaration", required=True)
     resolve_parser.add_argument("--intent", required=True)
     resolve_parser.set_defaults(func=cmd_resolve_binding)
+
+    invoke_parser = sub.add_parser("invoke", help="Invoke an execution binding with intent inputs via protocol adapter")
+    invoke_parser.add_argument("--declaration", required=True)
+    invoke_parser.add_argument("--intent", required=True)
+    invoke_parser.add_argument("--timeout", type=float, default=None, help="Request timeout in seconds")
+    invoke_parser.set_defaults(func=cmd_invoke)
 
     args = parser.parse_args()
     sys.exit(args.func(args))

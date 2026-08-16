@@ -97,11 +97,11 @@ $$\text{PCL Core} = \langle \text{Actor}, \text{Outcome}, \text{Interface}, \tex
 │ - Multi-step Workflow Orchestration DAGs (Temporal, Airflow)          │
 │ - Payment, Billing, Escrow, and Court Dispute Resolution Platforms    │
 ├────────────────────────────────────────────────────────────────────────┤
-│ PROTOCOL ADAPTERS (External Plugins)                                   │
-│ - ROS 2 Action / Service Adapter                                       │
-│ - HTTP / OpenAPI REST Adapter                                          │
-│ - OPC-UA / MQTT Industrial Adapters                                    │
-│ - W3C Web of Things (WoT) Adapter                                      │
+│ PROTOCOL ADAPTERS (Execution Transport Bridges)                        │
+│ - HTTP / OpenAPI REST Adapter (Functional Reference Adapter)           │
+│ - ROS 2 Action / Service Adapter (Declarative Stub / V1 Roadmap)       │
+│ - OPC-UA / MQTT Industrial Adapters (Declarative Stub / V1 Roadmap)    │
+│ - W3C Web of Things (WoT) Adapter (Declarative Stub / V1 Roadmap)      │
 ├────────────────────────────────────────────────────────────────────────┤
 │ REFERENCE SDK (Python Implementation)                                  │
 │ - Document Models, JSON Schema Validators                              │

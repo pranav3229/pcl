@@ -1,0 +1,36 @@
+{
+  "pcl_version": "0.1.0",
+  "id": "cap-transport-http-amr",
+  "entity_id": "robot-17",
+  "semantic_type": {
+    "vocabulary": "https://pcl.dev/vocab/logistics/v0",
+    "term": "package_transport",
+    "label": "AMR Package Transport"
+  },
+  "summary": "Autonomous pallet and package transport within warehouse via HTTP REST execution bridge",
+  "inputs": [
+    { "name": "object", "role": "object", "value_kind": "entity_ref", "required": true },
+    { "name": "origin", "role": "origin", "value_kind": "location_ref", "required": true },
+    { "name": "destination", "role": "destination", "value_kind": "location_ref", "required": true }
+  ],
+  "outputs": [
+    { "name": "delivered_object", "role": "object", "value_kind": "entity_ref" }
+  ],
+  "constraints": [
+    { "name": "max_payload", "quantity": { "value": 25, "unit": "kg", "comparator": "lte" } },
+    { "name": "deadline", "quantity": { "value": 30, "unit": "min", "comparator": "lte" } }
+  ],
+  "execution": {
+    "protocol": "http",
+    "target": "http://127.0.0.1:8080/api/v1/transport",
+    "operation": "POST",
+    "parameters_map": {
+      "object": "inputs.object.ref",
+      "from": "inputs.origin.ref",
+      "to": "inputs.destination.ref"
+    },
+    "metadata": {
+      "timeout": 10.0
+    }
+  }
+}

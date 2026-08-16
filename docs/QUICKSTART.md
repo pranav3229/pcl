@@ -155,25 +155,45 @@ python sdk/python/pcl/cli.py resolve-binding \
 
 ---
 
-## 6. The External Execution Boundary
+## 6. Real Execution Dispatch via Protocol Adapter
 
-PCL core **does not execute native protocols** (it does not spawn ROS nodes or make HTTP calls). Instead, an external protocol adapter consumes the resolved payload and dispatches it to the physical system:
+PCL core decouples protocol matching and parameter resolution from network I/O. Dispatch is performed by protocol adapters:
+
+- **HTTP Execution Adapter (`adapters.HttpAdapter`)**: Fully functional reference adapter in v0.1 that serializes resolved parameters into JSON and dispatches requests over HTTP (POST, PUT, GET) with timeout controls and structured error handling.
+- **ROS 2 & Industrial Adapters**: Specified as declarative stubs on the V1 roadmap.
 
 ```
 ┌────────────────────────────────────────────────────────┐
 │ PCL Matcher & Parameter Resolver                       │
-│ (Produces declarative native payload)                  │
+│ (Produces declarative native payload from Intent)      │
 └───────────────────────────┬────────────────────────────┘
                             │
 ┌───────────────────────────▼────────────────────────────┐
-│ External Protocol Adapter (e.g. adapters/ros2.py)       │
-│ (Translates payload to ROS 2 Action Goal / HTTP POST)  │
+│ Protocol Adapter (e.g. adapters.HttpAdapter)           │
+│ (Sends HTTP POST request / dispatches to robot bridge) │
 └───────────────────────────┬────────────────────────────┘
                             │
 ┌───────────────────────────▼────────────────────────────┐
-│ Physical Robot Hardware / ROS 2 Navigation Stack       │
+│ Physical Robot Hardware / Capability Server            │
 │ (Executes physical motion in the real world)           │
 └────────────────────────────────────────────────────────┘
+```
+
+### Try the Live End-to-End HTTP Demo
+
+You can run a complete end-to-end execution against a local mock AMR server:
+
+```bash
+# Terminal 1: Start local capability server
+python examples/http/server.py
+
+# Terminal 2: Invoke capability via PCL CLI
+python sdk/python/pcl/cli.py invoke \
+  --declaration examples/http/cap-transport-http.json \
+  --intent examples/http/intent-transport.json
+
+# Or run the complete automated lifecycle script:
+python examples/http/client.py
 ```
 
 ---
