@@ -20,7 +20,7 @@ In this quickstart, you will:
 Clone the repository and install the Python reference SDK in development mode:
 
 ```bash
-git clone https://github.com/pcl-standard/pcl.git
+git clone https://github.com/pranav3229/pcl.git
 cd pcl/sdk/python
 pip install -e .
 ```

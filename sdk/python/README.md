@@ -1,3 +1,3 @@
-# PCL
+# PCL Reference SDK
 
-See [README.md](../README.md).
+See [Root README.md](../../README.md) and [Developer Quickstart](../../docs/QUICKSTART.md).

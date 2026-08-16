@@ -126,9 +126,11 @@ python sdk/python/pcl/cli.py resolve-binding --declaration cap-transport.json --
 
 ## Current Status & Roadmap
 
-- **Protocol Version:** `0.1.0-draft`
-- **Release Stage:** **Public Alpha Preparation**
-- **Test Suite:** 111/111 unit, adversarial, and conformance tests passing (100% green).
+- **Protocol Specification:** Version `0.1.0` (Draft)
+- **Release Version:** `v0.1.0-alpha` (Public Alpha)
+- **Python Reference SDK:** `pcl-sdk` `0.1.0a1`
+- **Release Stage:** **Public Alpha**
+- **Test Suite:** 112/112 unit, adversarial, and conformance tests passing (100% green).
 - **Decoupled Architecture:** PCL core remains independent of robot runtime engines, workflow DAGs, and blockchain/token bloat.
 
 ---
@@ -138,10 +140,12 @@ python sdk/python/pcl/cli.py resolve-binding --declaration cap-transport.json --
 - 🚀 **[Developer Quickstart](docs/QUICKSTART.md)**: 10-minute walkthrough of declaration, matching, invocation, and verification.
 - 📐 **[Architecture Reference](docs/ARCHITECTURE.md)**: Deep dive into the 5-element meta-model and protocol boundaries.
 - 🛠️ **[Clean-Room Implementation Guide](docs/CLEAN_ROOM_IMPLEMENTATION.md)**: How to implement PCL in Rust, Go, TypeScript, or C++.
+- 🤖 **[Robotics Integration Guide](docs/BUILDING_WITH_PCL.md)**: How Physical AI teams integrate PCL above ROS 2.
 - 📜 **[Normative Core Specification](spec/SPEC.md)**: Authoritative wire format and evaluation rules.
 - 🎯 **[Normative Matching Specification](spec/MATCHING.md)**: 8-gate matching logic and ranking score formula.
 - 🧪 **[Language-Agnostic Conformance Vectors](spec/conformance/)**: Portable JSON test vectors for matching, spatial distance, parameter resolution, JCS canonicalization, and signature verification.
-- 📋 **[Open-Source Governance & Legal Checklist](docs/OPEN_SOURCE_TODO.md)**: Director checklist for public licensing and governance.
+- 📋 **[Public Release & Conformance Audit](docs/PUBLIC_RELEASE_AUDIT.md)**: Audit summary and conformance status for v0.1.0-alpha.
+- 📦 **[Release Notes](docs/releases/0.1.0-alpha.md)**: Release notes for v0.1.0-alpha.
 
 ---
 
@@ -149,22 +153,32 @@ python sdk/python/pcl/cli.py resolve-binding --declaration cap-transport.json --
 
 ```
 pcl/
-├── README.md               # Landing documentation
+├── README.md               # Landing documentation & protocol overview
+├── LICENSE                 # Apache License 2.0
+├── CONTRIBUTING.md         # Open-source contribution guidelines
+├── SECURITY.md             # Security and vulnerability disclosure policy
+├── CHANGELOG.md            # Release changelog (Keep a Changelog format)
 ├── docs/                   # Developer documentation & architecture guides
 │   ├── QUICKSTART.md
 │   ├── ARCHITECTURE.md
+│   ├── BUILDING_WITH_PCL.md
 │   ├── CLEAN_ROOM_IMPLEMENTATION.md
-│   └── OPEN_SOURCE_TODO.md
+│   ├── FUTURE_ECOSYSTEM.md
+│   ├── PUBLIC_RELEASE_AUDIT.md
+│   ├── PUBLIC_RELEASE_AUDIT.json
+│   ├── VERSIONING.md
+│   └── releases/
+│       └── 0.1.0-alpha.md
 ├── spec/                   # Normative protocol specifications
 │   ├── SPEC.md             # Wire format specification
 │   ├── MATCHING.md         # Matching & ranking specification
 │   ├── schemas/            # JSON Schema Draft 2020-12 schemas
 │   ├── examples/           # Canonical example documents
 │   └── conformance/        # Language-agnostic JSON test vectors
-├── sdk/python/             # Python reference SDK & CLI tool
+├── sdk/python/             # Python reference SDK & CLI tool (`pcl-sdk`)
 ├── adapters/               # Optional protocol adapters (ROS 2, HTTP, OPC-UA)
-├── registry/               # Local capability registry fixture
-└── tests/                  # Automated test suite
+├── registry/               # Local capability registry fixtures
+└── tests/                  # Automated test suite (112 tests)
 ```
 
 ---

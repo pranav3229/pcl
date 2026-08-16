@@ -31,7 +31,7 @@ Thank you for your interest in contributing to PCL! PCL is being developed as an
 
 ### Installation
 ```bash
-git clone https://github.com/pcl-standard/pcl.git
+git clone https://github.com/pranav3229/pcl.git
 cd pcl/sdk/python
 pip install -e ".[dev]"
 ```
