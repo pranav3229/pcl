@@ -1,0 +1,32 @@
+{
+  "release_version": "0.1.0-alpha",
+  "protocol_version": "0.1.0",
+  "package_version": "0.1.0a1",
+  "license": "Apache-2.0",
+  "copyright": "Copyright (c) 2026 Pranav Tanna",
+  "test_suite": {
+    "total": 112,
+    "passed": 112,
+    "failed": 0,
+    "status": "PASS"
+  },
+  "conformance": {
+    "matching_vectors": "PASS",
+    "spatial_vectors": "PASS",
+    "parameter_map_vectors": "PASS",
+    "canonicalization_vectors": "PASS",
+    "verification_vectors": "PASS"
+  },
+  "security": {
+    "canonicalization": "RFC 8785 JCS",
+    "digests": "SHA-256",
+    "signature_schemes": ["ed25519", "ecdsa-p256-sha256"],
+    "vulnerability_reporting": "GitHub Private Vulnerability Reporting"
+  },
+  "ci_cd": {
+    "platforms": ["ubuntu-latest", "windows-latest"],
+    "python_versions": ["3.11", "3.12", "3.13"],
+    "permissions": "contents: read"
+  },
+  "public_readiness": "READY"
+}

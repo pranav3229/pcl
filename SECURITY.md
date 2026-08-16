@@ -10,13 +10,11 @@ Security vulnerabilities in canonicalization, signature parsing, or constraint e
 
 ## 2. Reporting a Vulnerability
 
-If you discover a potential security vulnerability in the PCL specification, schemas, or reference implementation:
+If you discover a potential security vulnerability in the PCL specification, JSON schemas, cryptographic test vectors, or reference implementation:
 
-- **DO NOT** create a public GitHub issue.
-- Please report vulnerabilities privately to enable coordinated disclosure.
-
-> **Director Notice / TODO:**
-> The project director will designate the official private security contact email (e.g., `security@pcl.dev` or GitHub Security Advisories) prior to public release. In the interim, please contact the repository maintainers directly.
+- **DO NOT** disclose the vulnerability publicly in GitHub issues, pull requests, or discussions.
+- Please report vulnerabilities privately via **[GitHub Private Vulnerability Reporting](https://github.com/pranav3229/pcl/security/advisories/new)** or by reaching out to the repository maintainers directly through private security advisory channels.
+- We appreciate coordinated disclosure and will acknowledge responsible disclosure in release notes once resolved.
 
 ---
 
