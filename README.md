@@ -110,10 +110,32 @@ python sdk/python/pcl/cli.py invoke --declaration cap-transport.json --intent in
 
 Robots, CNC workcells, and physical machines already have internal control stacks. PCL provides a standardized capability contract so AI agents and fleet dispatchers can discover, match against, and invoke capabilities without needing custom point-to-point integration code for every device.
 
-- **Transport-Independent Invocation:** Declaratively maps intent to native execution bindings. The v0.1 reference SDK includes a functional HTTP execution adapter; ROS 2, OPC-UA, and MQTT remain reference/future transport bindings.
-- **Deterministic & Fail-Closed:** No non-deterministic LLM hallucinations during matching or verification.
-- **Spatial & Temporal Grounding:** Standardized WGS84 geodesic proximity and TTL availability gating.
-- **Cryptographic Trust:** Post-execution verification using RFC 8785 JSON Canonicalization Scheme (JCS) and Ed25519 signatures.
+### The Core Ontological Model
+At its core, PCL separates concerns that are usually tightly coupled in robotics and automation:
+
+| Question | PCL Primitive | Description |
+| :--- | :--- | :--- |
+| **Who or what provides the capability?** | `Entity` | Physical identity (robot, machine, human, AI agent, or composite cell). |
+| **What can it do?** | `CapabilityDeclaration` | Declared semantic task, I/O parameters, and physical boundary constraints. |
+| **What does an agent want done?** | `Intent` | Consumer demand specifying requested goal, inputs, and physical constraints. |
+| **Can the capability satisfy the intent?** | `Matching` | 8-gate fail-closed deterministic evaluation (goals, I/O, limits, location, state). |
+| **How is the intent translated to native APIs?**| `ExecutionBinding` | Declarative EBNF dot-path parameter mapping into HTTP, ROS 2, or OPC-UA. |
+| **What actually happened in the physical world?**| `Evidence` | Observed metrics and artifact digests with RFC 8785 JCS + Ed25519 signatures. |
+
+---
+
+## Protocol Comparison & Layering
+
+| Standard / Framework | Primary Focus | Layer in Stack | Relationship to PCL |
+| :--- | :--- | :--- | :--- |
+| **OpenAPI / REST** | Web service APIs | Transport | Target execution binding for web-connected machines |
+| **Model Context Protocol (MCP)** | LLM ↔ Software Tools | Agent/Tool | Complementary standard for digital tools; PCL handles physical-world affordances |
+| **ROS 2 & Nav2** | Robotics control & kinematics | Robotics Runtime | Underlying execution system for mobile robots and arms |
+| **OPC-UA / MQTT** | Industrial machine telemetry & SCADA | Industrial Bus | Target execution transport for manufacturing equipment |
+| **VDA 5050** | AGV/AMR fleet task dispatch | Fleet Dispatch | Lower-level transport protocol for industrial mobile robots |
+| **PCL (Physical Capability Language)** | **Physical capability semantics & verification** | **Protocol Layer** | **Universal capability contract & cryptographic verification** |
+
+For a deep architectural essay, see 📖 **[Why PCL? (The Missing Abstraction)](docs/WHY_PCL.md)**.
 
 ---
 
@@ -147,6 +169,7 @@ See [examples/http/README.md](examples/http/README.md) for full instructions and
 
 ## Documentation & Standards
 
+- 📖 **[Why PCL?](docs/WHY_PCL.md)**: Deep dive on the problem space, protocol comparisons (MCP, ROS 2, OpenAPI), and architectural rationale.
 - 🚀 **[Developer Quickstart](docs/QUICKSTART.md)**: 10-minute walkthrough of declaration, matching, invocation, and verification.
 - 📐 **[Architecture Reference](docs/ARCHITECTURE.md)**: Deep dive into the 5-element meta-model and protocol boundaries.
 - 🛠️ **[Clean-Room Implementation Guide](docs/CLEAN_ROOM_IMPLEMENTATION.md)**: How to implement PCL in Rust, Go, TypeScript, or C++.
@@ -169,6 +192,7 @@ pcl/
 ├── SECURITY.md             # Security and vulnerability disclosure policy
 ├── CHANGELOG.md            # Release changelog (Keep a Changelog format)
 ├── docs/                   # Developer documentation & architecture guides
+│   ├── WHY_PCL.md
 │   ├── QUICKSTART.md
 │   ├── ARCHITECTURE.md
 │   ├── BUILDING_WITH_PCL.md
