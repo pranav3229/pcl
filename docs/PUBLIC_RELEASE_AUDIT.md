@@ -29,10 +29,10 @@ PCL is an open, vendor-neutral protocol for declaring, discovering, binding, and
 ## 3. Reference Implementation & Testing
 
 - **Reference SDK:** Python reference implementation located in [`sdk/python/`](../sdk/python/).
-- **CLI Commands:** `pcl validate`, `pcl match`, `pcl resolve-binding`, `pcl verify`.
+- **CLI Commands:** `pcl validate`, `pcl match`, `pcl resolve-binding`, `pcl invoke`, `pcl verify`.
 - **Test Suite Results:**
-  - **112 / 112 automated tests passing** (100% green).
-  - Multi-tier coverage spanning unit tests, adversarial constraint boundaries, composition, cryptographic verification, and language-agnostic conformance vectors.
+  - **120 / 120 automated tests passing** (100% green).
+  - Multi-tier coverage spanning unit tests, adversarial constraint boundaries, composition, live HTTP execution, cryptographic verification, and language-agnostic conformance vectors.
 - **Continuous Integration:** GitHub Actions workflow ([`.github/workflows/ci.yml`](../.github/workflows/ci.yml)) testing across Ubuntu and Windows on Python 3.11, 3.12, and 3.13 with least-privilege permissions (`contents: read`).
 
 ---

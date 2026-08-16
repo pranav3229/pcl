@@ -299,7 +299,7 @@ Deterministic evidence verification (`verify_evidence`) executes a four-tier eva
 1. **Schema Validation:** Draft 2020-12 compliance.
 2. **Cryptographic Integrity:** Validates signatures over the RFC 8785 JCS canonical digest.
 3. **Provenance Validation:** Verifies linkage of `intent_id`, `declaration_id`, `entity_id`, and `execution_id`.
-4. **Constraint Satisfaction:** Evaluates observed metrics against the consumer's `Intent.constraints` using the Phase 1 generalized constraint algebra.
+4. **Constraint Satisfaction:** Evaluates observed metrics against the consumer's `Intent.constraints` using the generalized constraint algebra.
 
 ## 13. Non-Goals (V0)
 

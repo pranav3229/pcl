@@ -1,4 +1,4 @@
-"""Phase 2 Adversarial Test Suite: Spatial/Location Matching and Operational Gating.
+"""Test Suite: Spatial/Location Matching and Operational Gating.
 
 Covers:
 - Semantic anchor matching and ref equality/rejection
@@ -345,7 +345,7 @@ def test_exact_boundary_valid_until_deterministic(base_offer):
 
 
 # ============================================================================
-# 4. STRUCTURED DIAGNOSTICS FOR PHASE 2
+# 4. STRUCTURED DIAGNOSTICS FOR SPATIAL & OPERATIONAL GATING
 # ============================================================================
 
 

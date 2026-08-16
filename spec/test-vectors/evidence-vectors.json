@@ -1,5 +1,5 @@
 {
-  "title": "PCL Phase 4 Cryptographic Evidence Test Vectors",
+  "title": "PCL Cryptographic Evidence Test Vectors",
   "version": "0.1.0",
   "canonicalization_standard": "RFC 8785 JSON Canonicalization Scheme (JCS)",
   "vectors": [

@@ -1,4 +1,4 @@
-"""Phase 4 Test Suite: Outcome Evidence, Verification & Cryptographic Attestation.
+"""Test Suite: Outcome Evidence, Verification & Cryptographic Attestation.
 
 Covers:
 - RFC 8785 JCS Canonicalization and SHA-256 digest generation

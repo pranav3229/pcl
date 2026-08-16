@@ -99,7 +99,7 @@ Implement or link an RFC 8785 JSON Canonicalization Scheme library:
 Implement `verify_evidence(evidence, intent, declaration, public_keys)`:
 1. **Integrity:** Verify Ed25519 and ECDSA P-256 signatures over the unsigned payload's canonical JCS digest.
 2. **Provenance:** Check `intent_id`, `declaration_id`, `entity_id`, and `execution_id`.
-3. **Constraint Evaluation:** Evaluate `observed_metrics` against original `Intent.constraints` using the Phase 1 algebra.
+3. **Constraint Evaluation:** Evaluate `observed_metrics` against original `Intent.constraints` using the normative constraint algebra.
 
 ---
 

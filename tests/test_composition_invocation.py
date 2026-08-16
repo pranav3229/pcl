@@ -1,4 +1,4 @@
-"""Phase 3 Test Suite: Capability Composition and Native Protocol Invocation Bindings.
+"""Test Suite: Capability Composition and Native Protocol Invocation Bindings.
 
 Covers:
 - CapabilityDeclaration composed_of declarative composition
